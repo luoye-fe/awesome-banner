@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    body, html {
+        margin: 0;
+        padding: 0;
+    }
+    .con {
+        width: 750px;
+        height: 390px;
+        background-size: 750px 390px;
+        position: relative;
+    }
+    
+    .modelmodule {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 240px;
+    }
+    
+    p {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .p1 {
+        font-size: 92px;
+        color: #fff;
+        font-family: "RTWS YueRoundedGothic Demo";
+        position: absolute;
+        left: 78px;
+        top: 140px;
+        line-height: 1;
+    }
+    
+    .p2 {
+        font-size: 92px;
+        color: #fff;
+        font-family: "FZXiYuan-M01S";
+        position: absolute;
+        line-height: 1;
+        left: 78px;
+        top: 235px;
+    }
+    
+    .p3 {
+        font-size: 20px;
+        font-family: "FZLanTingHeiS-L-GB";
+        position: absolute;
+        line-height: 1;
+        left: 80px;
+        top: 332px;
+        color: #d75c10;
+        letter-spacing: 18px;
+    }
+    
+    .time {
+        position: absolute;
+        background-color: rgba(72, 91, 226, 0.95);
+        border-radius: 100%;
+        color: #fff;
+        top: 282px;
+        left: 500px;
+        width: 90px;
+        height: 90px;
+       /* display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;*/
+        text-align: center;
+    }
+    
+    .span1 {
+        font-size: 26px;
+        font-family: 'Avenir Next Condensed';
+        font-weight: bold;
+        display: inline-block;
+        width: 100%;
+        margin-top: 15px;
+    }
+    
+    .span2 {
+        font-size: 18px;
+        font-family: 'Avenir';
+        display: inline-block;
+        width: 100%;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="con" style="background-image: url('https://s10.mogucdn.com/mlcdn/c45406/170619_7id3lc87cac32gcdgl9816h2liebk_750x390.png')">
+            <img src="https://s10.mogucdn.com/mlcdn/c45406/170619_858ibhhbgl70a26765a55ikc4h0ai_425x358.png" class="modelmodule">
+            <p class="p1">甜妹</p>
+            <p class="p2">尚新</p>
+            <p class="p3">春装尚新时</p>
+            <div class="time">
+                <span class="span1">2.15</span>
+                <span class="span2">DAY</span>
+            </div>
+        </div>
+    </div>
+   <!--  <div>
+        <input type="text" name="p1" value="甜妹">
+        <input type="text" name="p2" value="尚新">
+        <input type="text" name="p3" value="春装尚新时">
+        <input type="text" name="span1" value="2.15">
+        <input type="text" name="span2" value="DAY">
+        <input type="button" name="" value="生成" onclick="generate()">
+    </div>
+    <h1>下面是图片</h1>
+    <div id="img"></div>
+    <script type="text/javascript" src="../dom-to-img.js"></script> -->
+    <script type="text/javascript">
+    var el = document.querySelector('#app');
+    var tpl =
+        `<div class="con" style="background: url('https://s10.mogucdn.com/mlcdn/c45406/170619_7id3lc87cac32gcdgl9816h2liebk_750x390.png')">
+            <img src="https://s10.mogucdn.com/mlcdn/c45406/170619_858ibhhbgl70a26765a55ikc4h0ai_425x358.png" class="modelmodule">
+            <p class="p1">{{p1}}</p>
+            <p class="p2">{{p2}}</p>
+            <p class="p3">{{p3}}</p>
+            <div class="time">
+                <span class="span1">{{span1}}</span>
+                <span class="span2">{{span2}}</span>
+            </div>
+        </div>`;
+
+    var array = ['p1', 'p2', 'p3', 'span1', 'span2'];
+    window.generate = function() {
+        var cur = tpl;
+        array.forEach(function(item) {
+            cur = cur.replace('{{' + item + '}}', document.querySelector('[name="' + item + '"]').value);
+        })
+        el.innerHTML = cur;
+        console.log(cur);
+        domtoimage.toPng(document.querySelector('.con'))
+        	.then(function(dataUrl) {
+            	var img = new Image();
+            	img.src = dataUrl;
+            	document.querySelector('#img').innerHTML = '';
+            	document.querySelector('#img').appendChild(img);
+        	})
+        	.catch(function(e) {
+        		console.error(e);
+        	});
+    }
+    domtoimage.toPng(document.querySelector('.con')).then(function(dataUrl) {
+        var img = new Image();
+        img.src = dataUrl;
+        document.querySelector('#img').appendChild(img);
+    });
+    </script>
+</body>
+
+</html>
